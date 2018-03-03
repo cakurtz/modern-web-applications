@@ -1,0 +1,136 @@
+curl -i --data "<projects><name>Solum</name></projects>" -H "Content-Type: application/xml" -X POST http://localhost:8080/assignment4/myeavesdrop/projects
+
+curl -i --data "<projects><name>Solum</name><description>Updated description</description></projects>" -H "Content-Type: application/xml" -X PUT http://localhost:8080/assignment4/myeavesdrop/projects/4
+
+curl -i -X GET http://localhost:8080/assignment4/myeavesdrop/projects/2
+
+curl -i -X DELETE http://localhost:8080/assignment4/myeavesdrop/projects/2
+
+curl -i --data "<projects><description>Solum description</description></projects>" -H "Content-Type: application/xml" -X POST http://localhost:8080/assignment4/myeavesdrop/projects
+
+
+
+
+
+Assignment 5
+
+curl -i --data "<project><name>Solum</name><description>Solum description</description></project>" -H "Content-Type: application/xml" -X POST http://localhost:8080/assignment5/myeavesdrop/projects/
+
+curl -i --data "<meeting><name>m2</name><year>2014</year></meeting>" -H "Content-Type: application/xml" -X POST http://localhost:8080/assignment5/myeavesdrop/projects/1/meetings
+
+Meeting Table Creation:
+create table meetings(name varchar(255) NOT NULL, year varchar(20) NOT NULL, project_id int, meeting_id bigint NOT NULL AUTO_INCREMENT, PRIMARY KEY(meeting_id), FOREIGN KEY(project_id) REFERENCES projects(project_id));
+
+curl -i --data "<meeting><name>newName</name><year>2015</year></meeting>" -H "Content-Type: application/xml" -X PUT http://localhost:8080/assignment5/myeavesdrop/projects/4/meetings/3
+
+curl -i -X DELETE http://localhost:8080/assignment5/myeavesdrop/projects/3
+
+
+
+
+POST Projects:
+201
+curl -i --data "<project><name>Solum</name><description>Solum description</description></project>" -H "Content-Type: application/xml" -X POST http://localhost:8080/assignment5/myeavesdrop/projects/
+
+400
+curl -i --data "<project><name>Solum</name></project>" -H "Content-Type: application/xml" -X POST http://localhost:8080/assignment5/myeavesdrop/projects/
+
+400
+curl -i --data "<project></project>" -H "Content-Type: application/xml" -X POST http://localhost:8080/assignment5/myeavesdrop/projects/
+
+400
+curl -i --data "<project><description>Solum description</description></project>" -H "Content-Type: application/xml" -X POST http://localhost:8080/assignment5/myeavesdrop/projects/
+
+400
+curl -i --data "<project><name></name><description>Solum description</description></project>" -H "Content-Type: application/xml" -X POST http://localhost:8080/assignment5/myeavesdrop/projects/
+
+400
+curl -i --data "<project><name>  </name><description>Solum description</description></project>" -H "Content-Type: application/xml" -X POST http://localhost:8080/assignment5/myeavesdrop/projects/
+
+400
+curl -i --data "<project><name>Solum</name><description></description></project>" -H "Content-Type: application/xml" -X POST http://localhost:8080/assignment5/myeavesdrop/projects/
+
+400
+curl -i --data "<project><name>Solum</name><description> </description></project>" -H "Content-Type: application/xml" -X POST http://localhost:8080/assignment5/myeavesdrop/projects/
+
+POST Meetings:
+201
+curl -i --data "<meeting><name>m2</name><year>2014</year></meeting>" -H "Content-Type: application/xml" -X POST http://localhost:8080/assignment5/myeavesdrop/projects/1/meetings
+
+400
+curl -i --data "<meeting><year>2014</year></meeting>" -H "Content-Type: application/xml" -X POST http://localhost:8080/assignment5/myeavesdrop/projects/1/meetings
+
+400
+curl -i --data "<meeting><name> </name><year>2014</year></meeting>" -H "Content-Type: application/xml" -X POST http://localhost:8080/assignment5/myeavesdrop/projects/1/meetings
+
+400
+curl -i --data "<meeting><name></name><year>2014</year></meeting>" -H "Content-Type: application/xml" -X POST http://localhost:8080/assignment5/myeavesdrop/projects/1/meetings
+
+400
+curl -i --data "<meeting><name>m2</name></meeting>" -H "Content-Type: application/xml" -X POST http://localhost:8080/assignment5/myeavesdrop/projects/1/meetings
+
+400
+curl -i --data "<meeting><name>m2</name><year> </year></meeting>" -H "Content-Type: application/xml" -X POST http://localhost:8080/assignment5/myeavesdrop/projects/1/meetings
+
+400
+curl -i --data "<meeting><name>m2</name><year></year></meeting>" -H "Content-Type: application/xml" -X POST http://localhost:8080/assignment5/myeavesdrop/projects/1/meetings
+
+404
+curl -i --data "<meeting><name>m2</name><year>2015</year></meeting>" -H "Content-Type: application/xml" -X POST http://localhost:8080/assignment5/myeavesdrop/projects/25/meetings
+
+400
+curl -i --data "<meeting><name>m2</name><year>12a4</year></meeting>" -H "Content-Type: application/xml" -X POST http://localhost:8080/assignment5/myeavesdrop/projects/1/meetings
+
+400
+curl -i --data "<meeting><name>m2</name><year>9</year></meeting>" -H "Content-Type: application/xml" -X POST http://localhost:8080/assignment5/myeavesdrop/projects/1/meetings
+
+GET:
+200
+curl -i -X GET http://localhost:8080/assignment5/myeavesdrop/projects/1
+
+404
+curl -i -X GET http://localhost:8080/assignment5/myeavesdrop/projects/25
+
+PUT:
+200
+curl -i --data "<meeting><name>newName</name><year>2015</year></meeting>" -H "Content-Type: application/xml" -X PUT http://localhost:8080/assignment5/myeavesdrop/projects/1/meetings/1
+
+200
+curl -i --data "<meeting><name>new  Name</name><year>2015</year></meeting>" -H "Content-Type: application/xml" -X PUT http://localhost:8080/assignment5/myeavesdrop/projects/1/meetings/1
+
+404
+curl -i --data "<meeting><name>newName</name><year>2015</year></meeting>" -H "Content-Type: application/xml" -X PUT http://localhost:8080/assignment5/myeavesdrop/projects/1/meetings/25
+
+404
+curl -i --data "<meeting><name>newName</name><year>2015</year></meeting>" -H "Content-Type: application/xml" -X PUT http://localhost:8080/assignment5/myeavesdrop/projects/25/meetings/1
+
+400
+curl -i --data "<meeting><year>2013</year></meeting>" -H "Content-Type: application/xml" -X PUT http://localhost:8080/assignment5/myeavesdrop/projects/1/meetings/1
+
+400
+curl -i --data "<meeting><name></name><year>2013</year></meeting>" -H "Content-Type: application/xml" -X PUT http://localhost:8080/assignment5/myeavesdrop/projects/1/meetings/1
+
+400
+curl -i --data "<meeting><name> </name><year>2013</year></meeting>" -H "Content-Type: application/xml" -X PUT http://localhost:8080/assignment5/myeavesdrop/projects/1/meetings/1
+
+400
+curl -i --data "<meeting><name>newNames</name><year></year></meeting>" -H "Content-Type: application/xml" -X PUT http://localhost:8080/assignment5/myeavesdrop/projects/1/meetings/1
+
+400
+curl -i --data "<meeting><name>newNames</name><year> </year></meeting>" -H "Content-Type: application/xml" -X PUT http://localhost:8080/assignment5/myeavesdrop/projects/1/meetings/1
+
+400
+curl -i --data "<meeting><name>newNames</name></meeting>" -H "Content-Type: application/xml" -X PUT http://localhost:8080/assignment5/myeavesdrop/projects/1/meetings/1
+
+400
+curl -i --data "<meeting><name>newNames</name><year>and</year></meeting>" -H "Content-Type: application/xml" -X PUT http://localhost:8080/assignment5/myeavesdrop/projects/1/meetings/1
+
+400
+curl -i --data "<meeting></meeting>" -H "Content-Type: application/xml" -X PUT http://localhost:8080/assignment5/myeavesdrop/projects/1/meetings/1
+
+DELETE:
+200
+curl -i -X DELETE http://localhost:8080/assignment5/myeavesdrop/projects/2
+
+404
+curl -i -X DELETE http://localhost:8080/assignment5/myeavesdrop/projects/25
